@@ -110,6 +110,8 @@ class User implements UserInterface
 
     /**
      * Returns the roles or permissions granted to the user for security.
+     *
+     * This annotations was added to fix PHP#2, but it also fixed PHP#6
      * @Serializer\VirtualProperty()
      * @Serializer\SerializedName("roles")
      */
