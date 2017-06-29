@@ -13,7 +13,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use JMS\Serializer\Annotation as Serializer;
 /**
  * @ORM\Entity
  * @ORM\Table(name="symfony_demo_comment")
@@ -26,6 +26,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author Ryan Weaver <weaverryan@gmail.com>
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class Comment
 {
@@ -35,6 +37,7 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Serializer\Expose()
      */
     private $id;
 
@@ -43,6 +46,7 @@ class Comment
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Expose()
      */
     private $post;
 
@@ -57,6 +61,7 @@ class Comment
      *     max=10000,
      *     maxMessage="comment.too_long"
      * )
+     * @Serializer\Expose()
      */
     private $content;
 
@@ -65,6 +70,7 @@ class Comment
      *
      * @ORM\Column(type="datetime")
      * @Assert\DateTime
+     * @Serializer\Expose()
      */
     private $publishedAt;
 
@@ -73,6 +79,7 @@ class Comment
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Expose()
      */
     private $author;
 
