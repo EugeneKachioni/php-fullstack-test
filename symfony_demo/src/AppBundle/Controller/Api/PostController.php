@@ -20,6 +20,7 @@ class PostController extends Controller
             ->createQueryBuilder()
             ->select('post')
             ->from(Post::class, 'post')
+            ->setMaxResults(30)
             ->getQuery()
             ->execute();
     }

@@ -103,3 +103,23 @@ fos_rest:
     format_listener:
         rules:
             - { path: ^/, priorities: [ json, html, xml ], fallback_format: json, prefer_extension: true }
+
+
+jms_serializer:
+    property_naming:
+        separator:  _
+        lower_case: true
+
+    metadata:
+        cache: file
+        debug: "%kernel.debug%"
+        file_cache:
+            dir: "%kernel.cache_dir%/serializer"
+        directories:
+            FOSUserBundle:
+                namespace_prefix: FOS\UserBundle
+                path: %kernel.root_dir%/config/serializer/FosUserBundle
+            AppBundle:
+                namespace_prefix: AppBundle
+                path: %kernel.root_dir%/config/serializer/AppBundle
+        auto_detection: true

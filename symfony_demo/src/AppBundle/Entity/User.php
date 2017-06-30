@@ -49,7 +49,7 @@ class User implements UserInterface
      *
      * @ORM\Column(type="string")
      */
-    private $password;
+    private $password = null;
 
     /**
      * @var array
@@ -67,6 +67,7 @@ class User implements UserInterface
     {
         return $this->username;
     }
+
 
     /**
      * @param string $username
@@ -96,10 +97,11 @@ class User implements UserInterface
 
     /**
      * @param string $password
+     * @ORM\PrePersist
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = null;
     }
 
     /**

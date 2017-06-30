@@ -1,0 +1,5 @@
+AppBundle\Entity\Post:
+    exclusion_policy: ALL
+    properties:
+        author:
+            expose: true
