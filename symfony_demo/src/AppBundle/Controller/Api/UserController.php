@@ -5,7 +5,11 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as FOS;
+use FOS\RestBundle\Controller\Annotations\Prefix;
 
+/**
+ * @Prefix("api/")
+ */
 class UserController extends Controller
 {
     /**
@@ -15,6 +19,9 @@ class UserController extends Controller
      */
     public function getAction(User $user)
     {
+      //  $user->setPassword(null);
+        $user->setRoles($user->getRoles()); // we can write a method in User Entity, which contains correct data
+
         return $user;
     }
 
@@ -33,18 +40,25 @@ class UserController extends Controller
     /**
      * @FOS\Put("/users/{id}/roles")
      *
-     * @FOS\RequestParam(name="roles")
+     * @FOS\RequestParam(name="roles")     *
      *
+     * @param User $theUser
+     * @param array $roles
      * @return \AppBundle\Entity\User
      */
     public function setRolesAction(User $theUser, array $roles)
     {
-        $theUser->setRoles($roles);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $manager = $this->getDoctrine()->getManagerForClass(User::class);
+        if (!empty($user) && ($user->getId() === $theUser->getId())) {
+            $theUser->setRoles($roles);
 
-        $manager->flush();
+            $manager = $this->getDoctrine()->getManagerForClass(User::class);
+            $manager->flush();
 
-        return $theUser;
+            return $theUser;
+        }
+
+        throw $this->createAccessDeniedException('You cannot change rules!');
     }
 }

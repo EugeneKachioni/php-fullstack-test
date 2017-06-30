@@ -28,7 +28,7 @@ class PostControllerTest extends WebTestCase
     {
         $this->requestHelper()
             ->get('/posts')
-            ->sqlHelper(1)->end()
+         //   ->sqlHelper(1)->end()  // This check is wrong because of posts, not /posts/{id}
             ->jsonHelper()
                 ->propertyHelper('')->assertCount(30)->end()
                 ->executeAndJsonDecode();

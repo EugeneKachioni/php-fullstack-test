@@ -5,10 +5,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="symfony_demo_user")
+ * @ExclusionPolicy("all")
  *
  * Defines the properties of the User entity to represent the application users.
  * See http://symfony.com/doc/current/book/doctrine.html#creating-an-entity-class
@@ -23,7 +26,7 @@ class User implements UserInterface
 {
     /**
      * @var int
-     *
+     * @Expose
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -32,14 +35,14 @@ class User implements UserInterface
 
     /**
      * @var string
-     *
+     * @Expose
      * @ORM\Column(type="string", unique=true)
      */
     private $username;
 
     /**
      * @var string
-     *
+     * @Expose
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
@@ -53,7 +56,7 @@ class User implements UserInterface
 
     /**
      * @var array
-     *
+     * @Expose
      * @ORM\Column(type="json_array")
      */
     private $roles = [];
@@ -110,8 +113,8 @@ class User implements UserInterface
         $roles = $this->roles;
 
         // guarantees that a user always has at least one role for security
-        if (empty($roles)) {
-            $roles[] = 'ROLE_USER';
+        if (empty($roles) || !count($roles)) {
+            $roles = ['ROLE_USER'];
         }
 
         return array_unique($roles);

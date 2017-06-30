@@ -13,10 +13,13 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="symfony_demo_comment")
+ * @ExclusionPolicy("all")
  *
  * Defines the properties of the Comment entity to represent the blog comments.
  * See http://symfony.com/doc/current/book/doctrine.html#creating-an-entity-class

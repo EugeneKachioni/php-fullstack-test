@@ -5,11 +5,14 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation as JMS;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
  * @ORM\Table(name="symfony_demo_post")
+ * @ExclusionPolicy("all")
  *
  * Defines the properties of the Post entity to represent the blog posts.
  *
@@ -33,7 +36,7 @@ class Post
 
     /**
      * @var int
-     *
+     * @Expose
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -42,7 +45,7 @@ class Post
 
     /**
      * @var string
-     *
+     * @Expose
      * @ORM\Column(type="string")
      * @Assert\NotBlank
      */
@@ -50,14 +53,14 @@ class Post
 
     /**
      * @var string
-     *
+     * @Expose
      * @ORM\Column(type="string")
      */
     private $slug;
 
     /**
      * @var string
-     *
+     * @Expose
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="post.blank_summary")
      */
@@ -65,7 +68,7 @@ class Post
 
     /**
      * @var string
-     *
+     * @Expose
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="post.blank_content")
      * @Assert\Length(min=10, minMessage="post.too_short_content")
@@ -74,7 +77,7 @@ class Post
 
     /**
      * @var \DateTime
-     *
+     * @Expose
      * @ORM\Column(type="datetime")
      * @Assert\DateTime
      */
@@ -82,17 +85,17 @@ class Post
 
     /**
      * @var User
-     *
+     * @Expose
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @JMS\MaxDepth(1)
+     * @Serializer\MaxDepth(1)
      */
     private $author;
 
     /**
      * @var Comment[]|ArrayCollection
-     *
+     * @Expose
      * @ORM\OneToMany(
      *      targetEntity="Comment",
      *      mappedBy="post",
@@ -100,7 +103,7 @@ class Post
      * )
      * @ORM\OrderBy({"publishedAt": "DESC"})
      *
-     * @JMS\Exclude()
+     * @Serializer\Exclude()
      */
     private $comments;
 

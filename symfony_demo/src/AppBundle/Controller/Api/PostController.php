@@ -5,7 +5,11 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as FOS;
+use FOS\RestBundle\Controller\Annotations\Prefix;
 
+/**
+ * @Prefix("api/")
+ */
 class PostController extends Controller
 {
     /**
